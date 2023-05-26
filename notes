@@ -10,15 +10,11 @@ DB_PORT=3001
 
 for database creation, package.json has being modified and scripts created, so we can just run these commands in the console.
 
-npm run createdb
+'npm run createdb' - This will drop the database if it exists and create the database from scratch
 
-This will drop the database if it exists and create the database from scratch
-
-npm run createtables
+'npm run createtables' -This will create necessary tables
  
-Pre-seed the database with fake auction data
-
-npm run seed
+'npm run seed' - Pre-seed the database with fake auction data
 
 
 There is sequelize cli and apparently it's better to use this to create a separate table in the DB for storing hashed passwords and user info etc. but it gets super complicated. The application starts to grow.
