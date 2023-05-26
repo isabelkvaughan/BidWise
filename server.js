@@ -1,26 +1,40 @@
-const path = require('path');
 const express = require('express');
-// const exphbs = require('express-handlebars');
-const routes = require('./controllers');
-// const helpers = require('./utils/helpers');
+const { Sequelize } = require('sequelize');
+const routes = require('./controllers/routes');
 const sequelize = require('./config/connection');
-
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || process.env.DB_PORT || 3000;
 
-// // Create the Handlebars.js engine object with custom helper functions
-// const hbs = exphbs.create({ helpers });
+// Load environment variables from .env file
+require('dotenv').config();
 
-// // Inform Express.js which template engine we're using
-// app.engine('handlebars', hbs.engine);
-// app.set('view engine', 'handlebars');
+// Set the environment variable
+process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+// Test the database connection
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Database connection has been established successfully.');
 
-app.use(routes);
+    // Synchronize Sequelize models with the database
+    await sequelize.sync();
+    console.log('Sequelize models synchronized successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+})();
 
-sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log('Now listening'));
+// Middleware
+app.use(express.json()); // JSON middleware for JSON payloads in request body
+
+// Routes
+app.use('/', routes);
+
+// Start the server
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
 });
+
+// Increase server timeout
+server.setTimeout(30000); // Set the timeout value in milliseconds (e.g., 30 seconds)
