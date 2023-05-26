@@ -1,8 +1,12 @@
-const router = require('express').Router();
+const express = require('express');
+const routes = require('./routes');
 
-// Example route to test
-router.get('/', (req, res) => {
-    res.json({ message: 'Hello, World!' });
-  });
-  
-module.exports = router;
+const app = express();
+const PORT = process.env.PORT || process.env.DB_PORT;
+
+app.use(express.json());
+app.use('/api', routes);
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

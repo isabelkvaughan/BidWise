@@ -1,0 +1,118 @@
+
+example '.env' file: 
+
+DB_NAME=bidwise_db
+DB_USER=<username>
+DB_PASSWORD=<password>
+DB_HOST=localhost
+DB_PORT=3001
+
+
+for database creation, package.json has being modified and scripts created, so we can just run these commands in the console.
+
+GET /createdb
+
+This will drop the database if it exists and create the database from scratch
+
+GET /createtables
+ 
+Pre-seed the database with fake auction data
+
+GET /seed
+
+
+There is sequelize cli and apparently it's better to use this to create a separate table in the DB for storing hashed passwords and user info etc. but it gets super complicated. The application starts to grow.
+
+
+Manually delete DB files when running into major issues: 
+
+Windows: 
+
+Stop mysql80 in services (search services) 
+or use command line in CMD with admin rights (right click/ 'run as administrator')
+
+Stop service
+'net stop mysql80'
+
+Query service
+'sc query mysql80'
+
+Remove the DB folder while stopped only.
+
+Start it again
+'net start mysql80'
+
+DB Folder location:
+C:\ProgramData\MySQL\MySQL Server 8.0\Data\<DB name>\
+
+
+Route testing on insomnia
+-------------------------
+
+GET /auctions: Get all auctions
+
+    HTTP request: GET http://localhost:3001/auctions
+
+GET /auctions/:id: Get an auction by ID
+
+    HTTP request: GET http://localhost:3001/auctions/1
+
+POST /auctions: Create a new auction
+
+    HTTP request: POST http://localhost:3001/auctions
+    Request body / payload:
+
+    {
+      "title": "New Auction",
+      "description": "Auction description",
+      "price": 100
+    }
+
+
+PUT /auctions/:id: Update an auction
+
+    HTTP request: PUT http://localhost:3001/auctions/1
+    Request body/ payload:
+
+    {
+      "title": "Updated Auction",
+      "description": "Updated description",
+      "price": 200
+    }
+
+DELETE /auctions/:id: Delete an auction
+
+    HTTP request: DELETE http://localhost:3001/auctions/1
+
+GET /users: Get all users
+
+    HTTP request: GET http://localhost:3001/users
+
+GET /users/:id: Get a user by ID
+
+    HTTP request: GET http://localhost:3001/users/1
+
+POST /users: Create a new user
+
+    HTTP request: POST http://localhost:3001/users
+    Request body / payload:
+
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com"
+    }
+
+PUT /users/:id: Update a user
+
+    HTTP request: PUT http://localhost:3001/users/1
+    Request body/ payload:
+
+    {
+      "name": "Updated Name",
+      "email": "updated@example.com"
+    }
+
+DELETE /users/:id: Delete a user
+
+    HTTP request: DELETE http://localhost:3001/users/1
