@@ -1,15 +1,15 @@
 const path = require("path");
 const express = require("express");
-//const session = require("express-session");
+const session = require("express-session");
 const exphbs = require("express-handlebars");
-const { Sequelize } = require("sequelize");
+//const { Sequelize } = require("sequelize");
 const routes = require("./controllers/routes");
-//const helpers = require("./utils/helpers");
+const helpers = require("./utils/helpers");
 const sequelize = require("./config/connection");
 const app = express();
 const PORT = process.env.PORT || process.env.DB_PORT || 3000;
 const hbs = exphbs.create({});
-// const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 // Load environment variables from .env file
 require("dotenv").config();
@@ -30,17 +30,22 @@ process.env.NODE_ENV = process.env.NODE_ENV || "production";
     console.error("Unable to connect to the database:", error);
   }
 })();
-// const sess = {
-//   secret: "Super secret secret",
-//   cookie: {},
-//   resave: false,
-//   saveUninitialized: true,
-//   store: new SequelizeStore({
-//     db: sequelize,
-//   }),
-// };
+const sess = {
+  secret: "Super secret secret",
+  cookie: {
+    maxAge: 60 * 60 * 1000,
+    httpOnly: true,
+    secure: false,
+    sameSite: "strict",
+  },
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize,
+  }),
+};
 
-//app.use(session(sess));
+app.use(session(sess));
 
 // Inform Express.js on which template engine to use
 app.engine("handlebars", hbs.engine);
@@ -55,9 +60,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", routes);
 
 // Start the server
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}.`);
+  });
 });
 
-// Increase server timeout
-server.setTimeout(30000); // Set the timeout value in milliseconds (e.g., 30 seconds)
+// // Increase server timeout
+// server.setTimeout(30000); // Set the timeout value in milliseconds (e.g., 30 seconds)
