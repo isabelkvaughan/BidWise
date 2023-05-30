@@ -81,6 +81,8 @@ const loginUser = async (req, res) => {
         .json({ message: "Incorrect email or password, please try again" });
       return;
     }
+    //console.log(userData);
+
     // Verify the posted password with the password store in the database
     const validPassword = await userData.checkPassword(req.body.password);
 
