@@ -8,7 +8,7 @@ const getAllAuctions = async (req, res) => {
     });
     // res.status(200).json(auctions);
     const allAuctions = auctions.map((data) => data.get({ plain: true }));
-    res.render("homepage", { allAuctions });
+    res.render("homepage", { allAuctions, logged_in: req.session.logged_in });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -27,7 +27,10 @@ const getAuction = async (req, res) => {
 
     //res.status(200).json(auction);
     const individualAuction = auction.get({ plain: true });
-    res.render("auction", { individualAuction });
+    res.render("auction", {
+      individualAuction,
+      logged_in: req.session.logged_in,
+    });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -42,6 +45,7 @@ const createAuction = async (req, res) => {
       startingPrice,
       endDate,
       userId,
+      user_id: req.session.user_id,
     });
     res.status(201).json(auction);
   } catch (error) {
@@ -56,7 +60,7 @@ const updateAuction = async (req, res) => {
 
     await Auction.update(
       { title, description, startingPrice, endDate },
-      { where: { id } }
+      { where: { id, user_id: req.session.user_id } }
     );
     res.status(200).json({ message: "Auction updated successfully" });
   } catch (error) {
@@ -67,7 +71,7 @@ const updateAuction = async (req, res) => {
 const deleteAuction = async (req, res) => {
   try {
     const { id } = req.params;
-    await Auction.destroy({ where: { id } });
+    await Auction.destroy({ where: { id, user_id: req.session.user_id } });
     res.status(200).json({ message: "Auction deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });

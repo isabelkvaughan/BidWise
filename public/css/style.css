@@ -43,14 +43,26 @@ main {
 
 nav {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  /* align-content: flex-end; */
+  column-gap: 20px;
 }
 
 nav a {
-  color: var(--light);
   text-decoration: none;
   text-align: center;
 }
 
+nav a.login-link {
+  color: var(--secondary);
+  display: inline-block;
+  background-color: var(--primary);
+  padding: 10px 20px;
+  text-transform: capitalize;
+}
 .logo img {
   width: 200px;
 }
