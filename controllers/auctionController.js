@@ -1,6 +1,6 @@
 const { Auction, User, Bid } = require("../models");
 
-// Controller functions for auctions
+// Controller functions for auction
 const getAllAuctions = async (req, res) => {
   try {
     const auctions = await Auction.findAll({
