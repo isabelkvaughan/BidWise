@@ -70,6 +70,8 @@ const getLoginUser = async (req, res) => {
   res.render("login");
 };
 
+// When user logins using login form
+
 const loginUser = async (req, res) => {
   try {
     // Find the user who matches the posted e-mail address
