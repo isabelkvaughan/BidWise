@@ -32,20 +32,25 @@ const User = sequelize.define(
     },
   },
   {
-    // Define instance methods
-    instanceMethods: {
-      async checkPassword(password) {
-        // Compare the provided password with the stored password hash
-        return bcrypt.compareSync(lpassword, this.password);
-      },
-    },
     hooks: {
-      async beforeCreate(newUserData) {
+      beforeCreate: async (newUserData) => {
         newUserData.password = await bcrypt.hash(newUserData.password, 10);
         return newUserData;
+      },
+      beforeUpdate: async (updatedUserData) => {
+        updatedUserData.password = await bcrypt.hash(
+          updatedUserData.password,
+          10
+        );
+        return updatedUserData;
       },
     },
   }
 );
+
+// Instance method to check password
+User.prototype.checkPassword = function (password) {
+  return bcrypt.compare(password, this.password);
+};
 
 module.exports = User;
