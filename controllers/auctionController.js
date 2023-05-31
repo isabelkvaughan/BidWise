@@ -36,16 +36,26 @@ const getAuction = async (req, res) => {
   }
 };
 
+// Render New Listing form
+const newListing = async (req, res) => {
+  try {
+    res.render("newlisting", { logged_in: req.session.logged_in });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+// Create New Listing
 const createAuction = async (req, res) => {
   try {
-    const { title, description, startingPrice, endDate, userId } = req.body;
+    const { title, description, startingPrice, endDate } = req.body;
+    const userId = req.session.user_id; // Get the user ID from the session
     const auction = await Auction.create({
       title,
       description,
       startingPrice,
       endDate,
       userId,
-      user_id: req.session.user_id,
     });
     res.status(201).json(auction);
   } catch (error) {
@@ -82,6 +92,7 @@ const deleteAuction = async (req, res) => {
 module.exports = {
   getAllAuctions,
   getAuction,
+  newListing,
   createAuction,
   updateAuction,
   deleteAuction,
