@@ -24,10 +24,6 @@ a {
   text-decoration: none;
 }
 
-a:visited {
-  color: inherit;
-}
-
 header {
   padding: 40px;
   text-align: center;
@@ -85,6 +81,14 @@ nav a:hover {
   font-size: 100%;
   transition: color 0.1s;
   margin-left: 16px;
+}
+
+.update-link {
+  color: var(--secondary);
+  display: inline-block;
+  background-color: var(--primary);
+  padding: 10px 20px;
+  text-transform: capitalize;
 }
 
 /* CARDS */
