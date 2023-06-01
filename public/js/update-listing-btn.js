@@ -1,8 +1,8 @@
 document
-  .getElementById("create-listing-btn")
-  .addEventListener("click", createListing);
+  .getElementById("update-listing-btn")
+  .addEventListener("click", updateListing);
 
-async function createListing(event) {
+async function updateListing(event) {
   event.preventDefault();
 
   const title = document.getElementById("title").value;
@@ -18,8 +18,8 @@ async function createListing(event) {
       endDate,
     };
 
-    const createAuctionResponse = await fetch("/auctions", {
-      method: "POST",
+    const updateAuctionResponse = await fetch(`/auctions/${auctionId}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -27,12 +27,10 @@ async function createListing(event) {
     });
 
     // Redirect to the Auction item created if OK
-    if (createAuctionResponse.ok) {
-      const createdAuction = await createAuctionResponse.json();
-      const auctionId = createdAuction.id;
+    if (updateAuctionResponse.ok) {
       window.location.replace(`/auctions/${auctionId}`);
     } else {
-      throw new Error("Failed to create auction");
+      throw new Error("Failed to update auction");
     }
   } catch (error) {
     console.error(error);

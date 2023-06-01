@@ -27,7 +27,7 @@ const getAuction = async (req, res) => {
     }
 
     const individualAuction = auction.get({ plain: true });
-    
+
     // Check if the logged in user created the auction
     const userId = req.session.user_id;
     const isOwner = individualAuction.userId === userId;
@@ -69,17 +69,47 @@ const createAuction = async (req, res) => {
   }
 };
 
+// Render Update Listing form
+const renderUpdate = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const auction = await Auction.findByPk(id);
+
+    if (!auction) {
+      return res.status(404).json({ error: "Auction not found" });
+    }
+
+    const individualAuction = auction.get({ plain: true });
+    res.render("updatelisting", {
+      individualAuction,
+      logged_in: req.session.logged_in,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+// Update Auction
 const updateAuction = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, startingPrice, endDate } = req.body;
-
-    await Auction.update(
-      { title, description, startingPrice, endDate },
-      { where: { id, user_id: req.session.user_id } }
+    const userId = req.session.user_id; // Get the user ID from the session
+    const auction = await Auction.update(
+      {
+        title,
+        description,
+        startingPrice,
+        endDate,
+        userId,
+      },
+      {
+        where: { id },
+      }
     );
-    res.status(200).json({ message: "Auction updated successfully" });
+    res.status(201).json(auction);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -100,6 +130,7 @@ module.exports = {
   getAuction,
   newListing,
   createAuction,
+  renderUpdate,
   updateAuction,
   deleteAuction,
 };

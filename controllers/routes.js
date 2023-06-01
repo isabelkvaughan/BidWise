@@ -9,7 +9,8 @@ router.get("/", auctionController.getAllAuctions);
 router.get("/auctions/:id", auctionController.getAuction);
 router.get("/newlisting", auctionController.newListing);
 router.post("/auctions", withAuth, auctionController.createAuction);
-router.put("/auctions/:id", withAuth, auctionController.updateAuction);
+router.get("/update/:id", withAuth, auctionController.renderUpdate);
+router.put("/auctions/:id", auctionController.updateAuction);
 router.delete("/auctions/:id", withAuth, auctionController.deleteAuction);
 
 // User routes
