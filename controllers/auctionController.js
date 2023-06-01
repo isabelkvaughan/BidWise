@@ -38,13 +38,8 @@ const getAuction = async (req, res) => {
 
 const createAuction = async (req, res) => {
   try {
-    const { title, description, startingPrice, endDate, userId } = req.body;
     const auction = await Auction.create({
-      title,
-      description,
-      startingPrice,
-      endDate,
-      userId,
+      ...req.body,
       user_id: req.session.user_id,
     });
     res.status(201).json(auction);

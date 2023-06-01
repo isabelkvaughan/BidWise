@@ -60,10 +60,28 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+const getProfile = async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ["password"] },
+      include: [{ model: Auction }],
+    });
+
+    const user = userData.get({ plain: true });
+
+    res.render("profile", {
+      ...user,
+      logged_in: true,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 const getLoginUser = async (req, res) => {
   // If a session exists, redirect the request to the homepage
   if (req.session.logged_in) {
-    res.redirect("/");
+    res.redirect("/profile");
     return;
   }
 
@@ -124,5 +142,6 @@ module.exports = {
   deleteUser,
   loginUser,
   logoutUser,
+  getProfile,
   getLoginUser,
 };
