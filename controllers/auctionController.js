@@ -14,6 +14,7 @@ const getAllAuctions = async (req, res) => {
   }
 };
 
+// Get a single auction
 const getAuction = async (req, res) => {
   try {
     const { id } = req.params;
@@ -25,11 +26,16 @@ const getAuction = async (req, res) => {
       return res.status(404).json({ error: "Auction not found" });
     }
 
-    //res.status(200).json(auction);
     const individualAuction = auction.get({ plain: true });
+    
+    // Check if the logged in user created the auction
+    const userId = req.session.user_id;
+    const isOwner = individualAuction.userId === userId;
+
     res.render("auction", {
       individualAuction,
       logged_in: req.session.logged_in,
+      isOwner,
     });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
