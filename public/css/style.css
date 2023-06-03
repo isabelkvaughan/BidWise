@@ -24,10 +24,6 @@ a {
   text-decoration: none;
 }
 
-a:visited {
-  color: inherit;
-}
-
 header {
   padding: 40px;
   text-align: center;
@@ -47,7 +43,6 @@ nav {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  /* align-content: flex-end; */
   column-gap: 20px;
 }
 
@@ -63,6 +58,7 @@ nav a.login-link {
   padding: 10px 20px;
   text-transform: capitalize;
 }
+
 .logo img {
   width: 200px;
 }
@@ -85,6 +81,14 @@ nav a:hover {
   font-size: 100%;
   transition: color 0.1s;
   margin-left: 16px;
+}
+
+.update-link {
+  color: var(--secondary);
+  display: inline-block;
+  background-color: var(--primary);
+  padding: 10px 20px;
+  text-transform: capitalize;
 }
 
 /* CARDS */
@@ -111,6 +115,45 @@ nav a:hover {
   text-align: center;
   font-weight: bold;
 }
+
+/* NEW LISTING */
+.new-listing {
+  margin-top: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--quatrinary);
+  border-radius: var(--border-radius);
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: var(--primary);
+  color: var(--secondary);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--dark);
+}
+
 
 /* LAYOUT */
 .container {

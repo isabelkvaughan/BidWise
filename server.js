@@ -7,7 +7,7 @@ const routes = require("./controllers/routes");
 const helpers = require("./utils/helpers");
 const sequelize = require("./config/connection");
 const app = express();
-const PORT = process.env.PORT || process.env.DB_PORT || 3000;
+const PORT = process.env.PORT || 3000; //default to port 3000 if not live (testing)
 const hbs = exphbs.create({});
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 

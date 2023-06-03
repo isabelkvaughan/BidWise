@@ -1,24 +1,13 @@
 const { Sequelize } = require("sequelize");
 require("dotenv").config();
 
-let sequelize;
-
-if (process.env.NODE_ENV === "test") {
-  // For testing environment
-  sequelize = new Sequelize("bidwise_db", "root", null, {
-    host: "localhost",
-    dialect: "mysql",
-    port: 3306, // Use port from .env for testing
-    logging: false,
-  });
-} else {
-  // For production environment
-  sequelize = new Sequelize("bidwise_db", "root", null, {
-    host: "localhost",
-    dialect: "mysql",
-    port: 3306, // Use Heroku's assigned port for production
-    logging: false,
-  });
-}
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
+  dialect: "mysql",
+  port: process.env.DB_PORT,
+  logging: false,
+});
 
 module.exports = sequelize;
+
+// This will default to port 3000 when launching server.js, .env file should have "DB_PORT=3306" for db and table creation for testing locally

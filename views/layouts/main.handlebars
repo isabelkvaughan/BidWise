@@ -19,6 +19,11 @@
           {{else}}
           <a href="/login" class="login-link">login</a>
           {{/if}}
+           <!-- Conditionally render create item link -->
+          {{#if logged_in}}
+          <a href="/newlisting" class="login-link">New Listing</a>
+          {{else}}
+          {{/if}}
         </nav>
       </header>
       <main class="container container-fluid mt-5">
@@ -35,5 +40,3 @@
   {{/if}}
 
   </body>
-
-</>

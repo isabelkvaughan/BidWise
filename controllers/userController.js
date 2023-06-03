@@ -70,6 +70,8 @@ const getLoginUser = async (req, res) => {
   res.render("login");
 };
 
+// When user logins using login form
+
 const loginUser = async (req, res) => {
   try {
     // Find the user who matches the posted e-mail address
@@ -81,6 +83,7 @@ const loginUser = async (req, res) => {
         .json({ message: "Incorrect email or password, please try again" });
       return;
     }
+
     // Verify the posted password with the password store in the database
     const validPassword = await userData.checkPassword(req.body.password);
 

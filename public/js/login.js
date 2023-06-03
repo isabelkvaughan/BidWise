@@ -1,3 +1,4 @@
+//login form
 const loginFormHandler = async (event) => {
   event.preventDefault();
 
@@ -19,17 +20,18 @@ const loginFormHandler = async (event) => {
   }
 };
 
+//signup form
 const signupFormHandler = async (event) => {
   event.preventDefault();
 
-  const username = document.querySelector("#username-signup").value.trim();
+  const name = document.querySelector("#name-signup").value.trim();
   const email = document.querySelector("#email-signup").value.trim();
   const password = document.querySelector("#password-signup").value.trim();
 
-  if (username && email && password) {
+  if (name && email && password) {
     const response = await fetch("/users", {
       method: "POST",
-      body: JSON.stringify({ username, email, password }),
+      body: JSON.stringify({ name, email, password }),
       headers: { "Content-Type": "application/json" },
     });
 
