@@ -4,11 +4,12 @@ const newFormHandler = async (event) => {
   const title = document.querySelector("#item-name").value.trim();
   const startingPrice = document.querySelector("#item-price").value.trim();
   const description = document.querySelector("#item-desc").value.trim();
+  const endDate = document.getElementById("endDate").value;
 
-  if (title && startingPrice && description) {
+  if (title && startingPrice && description && endDate) {
     const response = await fetch(`/auctions`, {
       method: "POST",
-      body: JSON.stringify({ title, description, startingPrice }),
+      body: JSON.stringify({ title, description, startingPrice, endDate }),
       headers: {
         "Content-Type": "application/json",
       },

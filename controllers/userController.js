@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Auction } = require("../models");
 
 // Controller functions for users
 const getAllUsers = async (req, res) => {
@@ -61,23 +61,6 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const getProfile = async (req, res) => {
-  try {
-    const userData = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ["password"] },
-      include: [{ model: Auction }],
-    });
-
-    const user = userData.get({ plain: true });
-
-    res.render("profile", {
-      ...user,
-      logged_in: true,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
 const getLoginUser = async (req, res) => {
   // If a session exists, redirect the request to the homepage
   if (req.session.logged_in) {
@@ -111,7 +94,6 @@ const loginUser = async (req, res) => {
         .json({ message: "Incorrect email or password, please try again" });
       return;
     }
-    // Create session variables based on the logged in user
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
@@ -140,8 +122,7 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  getLoginUser,
   loginUser,
   logoutUser,
-  getProfile,
-  getLoginUser,
 };

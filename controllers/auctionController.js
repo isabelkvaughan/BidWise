@@ -8,6 +8,9 @@ const getAllAuctions = async (req, res) => {
     });
     // res.status(200).json(auctions);
     const allAuctions = auctions.map((data) => data.get({ plain: true }));
+    //console.log(allAuctions.length);
+    // console.log(allAuctions);
+    // console.log(logged_in);
     res.render("homepage", { allAuctions, logged_in: req.session.logged_in });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
@@ -27,7 +30,7 @@ const getAuction = async (req, res) => {
     }
 
     const individualAuction = auction.get({ plain: true });
-    
+
     // Check if the logged in user created the auction
     const userId = req.session.user_id;
     const isOwner = individualAuction.userId === userId;
@@ -48,6 +51,29 @@ const newListing = async (req, res) => {
     res.render("newlisting", { logged_in: req.session.logged_in });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+const getProfile = async (req, res) => {
+  try {
+    const userId = req.session.user_id;
+    const userData = await User.findByPk(userId, {
+      attributes: { exclude: ["password"] },
+      include: [{ model: Auction }],
+    });
+    const user = userData.get({ plain: true });
+    //console.log(user);
+
+    const userAuctions = user.auctions;
+    //console.log(userId);
+    //console.log(userAuctions);
+
+    res.render("profile", {
+      user: user,
+      userAuctions,
+      logged_in: true,
+    });
+  } catch (err) {
+    res.status(500).json(err);
   }
 };
 
@@ -99,6 +125,7 @@ module.exports = {
   getAllAuctions,
   getAuction,
   newListing,
+  getProfile,
   createAuction,
   updateAuction,
   deleteAuction,

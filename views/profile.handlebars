@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-auto">
-    <h2>Welcome, {{name}}!</h2>
+    <h2>Welcome, {{user.name}}!</h2>
   </div>
 </div>
 
 <div class="row mt-4">
   <div class="col-md-6">
-    <h3>Add new item to the auction:</h3>
+    <h3>Add new auction:</h3>
 
     <form class="form new-auction-form">
       <div class="form-group">
@@ -27,16 +27,20 @@
         <textarea class="form-input" id="item-desc" name="item-desc"></textarea>
       </div>
       <div class="form-group">
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" required />
+      </div>
+      <div class="form-group">
         <button type="submit" class="btn btn-primary">Create</button>
       </div>
     </form>
   </div>
 
-  {{!-- {{#if allAuctions.length}}
-    <div class="col-md-6 project-list">
-      <h3>Your Current Items on Auction:</h3>
+  {{#if userAuctions.length}}
+    <div class="col-md-6 user-auction-list">
+      <h3>Current Auctions:</h3>
 
-      {{#each allAuctions as |auction|}}
+      {{#each userAuctions as |auction|}}
         <div class="row mb-2">
           <div class="col-md-8">
             <h4><a href="/auctions/{{auction.id}}">{{auction.title}}</a></h4>
@@ -50,7 +54,10 @@
         </div>
       {{/each}}
     </div>
-  {{/if}} --}}
+  {{else}}
+    <p>You haven't created any auctions yet.</p>
+  {{/if}}
+
 </div>
 
 <script src="/js/profile.js"></script>
