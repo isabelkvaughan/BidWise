@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Auction } = require("../models");
 
 // Controller functions for users
 const getAllUsers = async (req, res) => {
@@ -60,10 +60,11 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 const getLoginUser = async (req, res) => {
   // If a session exists, redirect the request to the homepage
   if (req.session.logged_in) {
-    res.redirect("/");
+    res.redirect("/profile");
     return;
   }
 
@@ -93,7 +94,6 @@ const loginUser = async (req, res) => {
         .json({ message: "Incorrect email or password, please try again" });
       return;
     }
-    // Create session variables based on the logged in user
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
@@ -122,7 +122,7 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  getLoginUser,
   loginUser,
   logoutUser,
-  getLoginUser,
 };
