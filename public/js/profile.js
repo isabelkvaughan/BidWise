@@ -23,26 +23,27 @@ const newFormHandler = async (event) => {
   }
 };
 
-// const delButtonHandler = async (event) => {
-//   if (event.target.hasAttribute("data-id")) {
-//     const id = event.target.getAttribute("data-id");
+const delButtonHandler = async (event) => {
+  if (event.target.hasAttribute("data-id")) {
+    const id = event.target.getAttribute("data-id");
 
-//     const response = await fetch(`/auctions/${id}`, {
-//       method: "DELETE",
-//     });
+    const response = await fetch(`/auctions/${id}`, {
+      method: "DELETE",
+    });
 
-//     if (response.ok) {
-//       document.location.replace("/profile");
-//     } else {
-//       alert("Failed to delete auction");
-//     }
-//   }
-// };
+    if (response.ok) {
+      document.location.replace("/profile");
+    } else {
+      alert("Failed to delete auction");
+    }
+  }
+};
 
 document
   .querySelector(".new-auction-form")
   .addEventListener("submit", newFormHandler);
 
-// document
-//   .querySelector(".project-list")
-//   .addEventListener("click", delButtonHandler);
+const deleteButtons = document.querySelectorAll(".delete-button");
+deleteButtons.forEach((button) => {
+  button.addEventListener("click", delButtonHandler);
+});

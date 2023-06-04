@@ -113,7 +113,22 @@ const updateAuction = async (req, res) => {
 const deleteAuction = async (req, res) => {
   try {
     const { id } = req.params;
-    await Auction.destroy({ where: { id, user_id: req.session.user_id } });
+    const userId = req.session.user_id;
+    // Find the auction to be deleted
+    const auction = await Auction.findOne({
+      where: {
+        id: id,
+        userId: userId, // Ensure that only the owner of the auction can delete it
+      },
+    });
+    // console.log(id);
+    // console.log(userId);
+    // console.log(auction);
+    if (!auction) {
+      return res.status(404).json({ error: "Auction not found" });
+    }
+    // Delete the auction
+    await auction.destroy();
     res.status(200).json({ message: "Auction deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });

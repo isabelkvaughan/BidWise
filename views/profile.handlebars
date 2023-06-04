@@ -43,11 +43,14 @@
       {{#each userAuctions as |auction|}}
         <div class="row mb-2">
           <div class="col-md-8">
-            <h4><a href="/auctions/{{auction.id}}">{{auction.title}}</a></h4>
+            <h5><a
+                class="auction-item"
+                href="/auctions/{{auction.id}}"
+              >{{auction.title}}</a></h5>
           </div>
           <div class="col-md-4">
             <button
-              class="btn btn-sm btn-danger"
+              class="btn btn-sm btn-danger delete-button"
               data-id="{{auction.id}}"
             >DELETE</button>
           </div>
