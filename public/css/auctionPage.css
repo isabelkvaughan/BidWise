@@ -1,77 +1,74 @@
 :root {
-    --primary: #60ab9a;
-    --secondary: #fff;
-    --tertiary: #92c5ba;
-    --quatrinary: #d9d9d9;
-    --light: #e3e4e3;
-    --dark: #182c23;
-    --error: rgb(228, 46, 1);
-    --border-radius: 0.3rem;
-  }
+  --primary: #9497e8;
+  --secondary: #fa5829;
+  --tertiary: #f6f4f4;
+  --quatrinary: #7f82d1;
+  --light: #fff;
+  --dark: #323b60;
+  --border-radius: 0.3rem;
+}
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .auction-name {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .description {
-    margin-bottom: 10px;
-  }
-  
-  .starting-price {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
-  a{
-    color: Blue;
-  }
-  
-  .max-size-img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 8px;
-    border: 8px groove var(--primary);
-    border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  }
-  
-  .end-date,
-  .creation-date,
-  .updated-date {
-    margin-bottom: 10px;
-  }
-  
-  #error-message,
-  #success-message {
-    display: none;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 4px;
-  }
-  
-  #error-message {
-    background-color: #ffdddd;
-    color: #ff0000;
-  }
-  
-  #success-message {
-    background-color: #ddffdd;
-    color: #008000;
-  }
-  
-  #bid-form input[type="number"],
-  #bid-form button[type="submit"] {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  
+.auction-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.description {
+  margin-bottom: 10px;
+}
+
+.starting-price {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+a {
+  color: Blue;
+}
+
+.max-size-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 8px;
+  border: 8px groove var(--primary);
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.end-date,
+.creation-date,
+.updated-date {
+  margin-bottom: 10px;
+}
+
+#error-message,
+#success-message {
+  display: none;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+#error-message {
+  background-color: #ffdddd;
+  color: #ff0000;
+}
+
+#success-message {
+  background-color: #ddffdd;
+  color: #008000;
+}
+
+#bid-form input[type="number"],
+#bid-form button[type="submit"] {
+  display: block;
+  margin-bottom: 10px;
+}
