@@ -32,9 +32,7 @@ header {
 }
 
 main {
-  display: flex;
-  flex-wrap: wrap;
-  flex-grow: 1;
+  display: block;
 }
 
 nav {
@@ -154,14 +152,7 @@ button[type="submit"]:hover {
   background-color: var(--dark);
 }
 
-
 /* LAYOUT */
-.container {
-  display: flex;
-  flex-flow: column wrap;
-  align-content: flex-start;
-  align-items: center;
-}
 
 .auction-list {
   display: flex;
@@ -171,4 +162,8 @@ button[type="submit"]:hover {
 
 .starting-price {
   padding: 10px;
+}
+
+a.auction-item {
+  color: var(--primary);
 }

@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-auto">
+    <h2>Welcome, {{user.name}}!</h2>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-6">
+    <h3>Add new auction:</h3>
+
+    <form class="form new-auction-form">
+      <div class="form-group">
+        <label for="item-name">Name of the Item:</label>
+        <input class="form-input" type="text" id="item-name" name="item-name" />
+      </div>
+      <div class="form-group">
+        <label for="item-price">Starting Price($):</label>
+        <input
+          class="form-input"
+          type="number"
+          id="item-price"
+          name="item-price"
+        />
+      </div>
+      <div class="form-group">
+        <label for="item-desc">Description:</label>
+        <textarea class="form-input" id="item-desc" name="item-desc"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" required />
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+    </form>
+  </div>
+
+  {{#if userAuctions.length}}
+    <div class="col-md-6 user-auction-list">
+      <h3>Current Auctions:</h3>
+
+      {{#each userAuctions as |auction|}}
+        <div class="row mb-2">
+          <div class="col-md-8">
+            <h5><a
+                class="auction-item"
+                href="/auctions/{{auction.id}}"
+              >{{auction.title}}</a></h5>
+          </div>
+          <div class="col-md-4">
+            <button
+              class="btn btn-sm btn-danger delete-button"
+              data-id="{{auction.id}}"
+            >DELETE</button>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <p>You haven't created any auctions yet.</p>
+  {{/if}}
+
+</div>
+
+<script src="/js/profile.js"></script>

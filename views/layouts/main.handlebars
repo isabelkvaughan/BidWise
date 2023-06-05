@@ -15,15 +15,13 @@
           <a class="logo" href="/"><img src="/images/logo.png"></a>
           <!-- Conditionally render login or logout links -->
           {{#if logged_in}}
+          <a href="/profile">profile</a> |
           <button class="no-button" id="logout">logout</button>
           {{else}}
           <a href="/login" class="login-link">login</a>
           {{/if}}
            <!-- Conditionally render create item link -->
-          {{#if logged_in}}
-          <a href="/newlisting" class="login-link">New Listing</a>
-          {{else}}
-          {{/if}}
+          
         </nav>
       </header>
       <main class="container container-fluid mt-5">
