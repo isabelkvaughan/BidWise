@@ -5,7 +5,7 @@ DB_NAME=bidwise_db
 DB_USER=<username>
 DB_PASSWORD=<password>
 DB_HOST=localhost
-DB_PORT=3001
+DB_PORT=3306
 
 
 for database creation, package.json has being modified and scripts created, so we can just run these commands in the console.

@@ -20,8 +20,13 @@ body {
 }
 
 a {
+  font-weight: bolder;
   color: var(--dark);
   text-decoration: none;
+}
+
+p{
+  font-size: 24px;
 }
 
 header {

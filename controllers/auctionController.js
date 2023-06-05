@@ -6,11 +6,9 @@ const getAllAuctions = async (req, res) => {
     const auctions = await Auction.findAll({
       include: [{ model: User, attributes: ["name", "email"] }],
     });
-    // res.status(200).json(auctions);
+
     const allAuctions = auctions.map((data) => data.get({ plain: true }));
-    //console.log(allAuctions.length);
-    // console.log(allAuctions);
-    // console.log(logged_in);
+
     res.render("homepage", { allAuctions, logged_in: req.session.logged_in });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
@@ -31,10 +29,6 @@ const getAuction = async (req, res) => {
 
     const individualAuction = auction.get({ plain: true });
 
-    // // Check if the logged in user created the auction
-    // const userId = req.session.user_id;
-    // const isOwner = individualAuction.userId === userId;
-
     res.render("auction", {
       individualAuction,
       logged_in: req.session.logged_in,
@@ -45,14 +39,6 @@ const getAuction = async (req, res) => {
   }
 };
 
-// Render New Listing form
-// const newListing = async (req, res) => {
-//   try {
-//     res.render("newlisting", { logged_in: req.session.logged_in });
-//   } catch (error) {
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// };
 const getProfile = async (req, res) => {
   try {
     const userId = req.session.user_id;
@@ -61,12 +47,7 @@ const getProfile = async (req, res) => {
       include: [{ model: Auction }],
     });
     const user = userData.get({ plain: true });
-    //console.log(user);
-
     const userAuctions = user.auctions;
-    //console.log(userId);
-    //console.log(userAuctions);
-
     res.render("profile", {
       user: user,
       userAuctions: userAuctions,
@@ -117,8 +98,6 @@ const updateAuction = async (req, res) => {
     auction.startingPrice = startingPrice;
     auction.endDate = endDate;
     console.log("auction PUT:", auction);
-    // Save the updated auction
-    // await auction.save();
 
     await Auction.update(auction, { where: { id: req.params.id } });
     res.status(200).json({ message: "Auction updated successfully" });
@@ -139,9 +118,7 @@ const deleteAuction = async (req, res) => {
         userId: userId, // Ensure that only the owner of the auction can delete it
       },
     });
-    // console.log(id);
-    // console.log(userId);
-    // console.log(auction);
+
     if (!auction) {
       return res.status(404).json({ error: "Auction not found" });
     }
@@ -149,6 +126,50 @@ const deleteAuction = async (req, res) => {
     await auction.destroy();
     res.status(200).json({ message: "Auction deleted successfully" });
   } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const createBid = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { amount } = req.body;
+    const userId = req.session.user_id;
+
+    // Find the auction
+    const auction = await Auction.findByPk(id);
+
+    if (!auction) {
+      return res.status(404).json({ error: "Auction not found" });
+    }
+
+    // Get the highest existing bid for the auction
+    const highestBid = await Bid.findOne({
+      where: { auctionId: id },
+      order: [["amount", "DESC"]],
+    });
+
+    // Validate bid amount
+    if (highestBid && amount <= highestBid.amount) {
+      return res.status(400).json({ error: "Bid must be higher than the current highest bid" });
+    }
+
+    // Create the bid
+    const bid = await Bid.create({
+      auctionId: id,
+      userId,
+      amount,
+    });
+
+    // Update the individualAuction startingPrice with the new bid amount
+    auction.startingPrice = amount;
+
+    // Save the updated individualAuction
+    await auction.save();
+
+    res.status(201).json(bid);
+  } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -161,4 +182,5 @@ module.exports = {
   createAuction,
   updateAuction,
   deleteAuction,
+  createBid,
 };
