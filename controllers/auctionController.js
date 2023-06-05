@@ -101,12 +101,13 @@ const updateAuction = async (req, res) => {
     const { id } = req.params;
     const { title, description, startingPrice, endDate } = req.body;
     const userId = req.session.user_id;
-    const auction = await Auction.findOne({
+    const auctionData = await Auction.findOne({
       where: {
         id: id,
         userId: userId, // Ensure that only the owner of the auction can update it
       },
     });
+    const auction = auctionData.get({ plain: true });
     if (!auction) {
       return res.status(404).json({ error: "Auction not found" });
     }
@@ -115,11 +116,14 @@ const updateAuction = async (req, res) => {
     auction.description = description;
     auction.startingPrice = startingPrice;
     auction.endDate = endDate;
-
+    console.log("auction PUT:", auction);
     // Save the updated auction
-    await auction.save();
+    // await auction.save();
+
+    await Auction.update(auction, { where: { id: req.params.id } });
     res.status(200).json({ message: "Auction updated successfully" });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

@@ -1,6 +1,7 @@
 const path = require("path");
 const express = require("express");
 const session = require("express-session");
+const Handlebars = require("handlebars");
 const exphbs = require("express-handlebars");
 //const { Sequelize } = require("sequelize");
 const routes = require("./controllers/routes");
@@ -9,6 +10,9 @@ const sequelize = require("./config/connection");
 const app = express();
 const PORT = process.env.PORT || 3000; //default to port 3000 if not live (testing)
 const hbs = exphbs.create({});
+Handlebars.registerHelper("json", function (context) {
+  return JSON.stringify(context);
+});
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 // Load environment variables from .env file

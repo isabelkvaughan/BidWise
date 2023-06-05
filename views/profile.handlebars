@@ -63,11 +63,11 @@
             </div>
 
         </div>
-      {{/each}}
-    
+       {{/each}}
+    {{#each userAuctions as |auction|}}
     <!-- Update form (initially hidden) -->
     <form id="updateAuctionForm" style="display: none;">
-      {{#each userAuctions as |auction|}}
+    
       <input
         type="text"
         id="title"
@@ -86,17 +86,21 @@
         placeholder="Starting Price"
         value="{{auction.startingPrice}}"
       />
-      <input type="date" id="endDate" value="{{auction.endDate}}" />
+      <input type="date" id="endDateUpdate" value="{{auction.endDate}}" />
       <button
         class="btn btn-sm btn-success update-button"
         data-id="{{auction.id}}"
         type="submit"
       >Save</button>
+     
     </form>
+    {{/each}}
   {{else}}
     <p>You haven't created any auctions yet.</p>
   {{/if}}
 </div>
 </div>
-
+<script>
+  var userAuctions = {{{json userAuctions}}}; // Assign userAuctions value to a JavaScript variable to use in profile.js
+</script>
 <script src="/js/profile.js"></script>

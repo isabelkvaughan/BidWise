@@ -50,50 +50,62 @@ deleteButtons.forEach((button) => {
 
 ///////////UPDATE
 
-// Get the necessary elements
-const userAuctionsElement = document.getElementById("userAuctions");
-const userAuctions = JSON.parse(userAuctionsElement.textContent);
+document.addEventListener("DOMContentLoaded", () => {
+  console.log(userAuctions);
 
-// Event listener for showing the update form
-document.addEventListener("click", (event) => {
-  if (event.target.classList.contains("show-update-form-btn")) {
-    const auctionId = event.target.getAttribute("data-id");
-    const updateAuctionForm = document.getElementById("updateAuctionForm");
-    const auction = userAuctions.find((auction) => auction.id === auctionId);
+  // Event listener for showing the update form
+  document.addEventListener("click", (event) => {
+    if (event.target.classList.contains("show-update-form-btn")) {
+      const auctionId = parseInt(event.target.getAttribute("data-id"));
+      // console.log("auctionId:", auctionId);
+      // console.log("userAuctions:", userAuctions);
+      const updateAuctionForm = document.getElementById("updateAuctionForm");
+      const auction = userAuctions.find((auction) => auction.id === auctionId);
+      // console.log("auction:", auction);
 
-    if (auction) {
-      updateAuctionForm.style.display = "block";
-      updateAuctionForm.setAttribute("data-id", auction.id);
-      document.getElementById("title").value = auction.title;
-      document.getElementById("description").value = auction.description;
-      document.getElementById("startingPrice").value = auction.startingPrice;
-      document.getElementById("endDate").value = auction.endDate;
-    }
-  }
-});
-
-// Event listener for updating an auction
-document
-  .getElementById("updateAuctionForm")
-  .addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const auctionId = event.target.getAttribute("data-id");
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-    const startingPrice = document.getElementById("startingPrice").value;
-    const endDate = document.getElementById("endDate").value;
-
-    const response = await fetch(`/auctions/${auctionId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title, description, startingPrice, endDate }),
-    });
-
-    if (response.ok) {
-      document.location.replace(`/auctions/${auctionId}`);
-    } else {
-      alert("Failed to update auction");
+      if (auction) {
+        updateAuctionForm.style.display = "block";
+        updateAuctionForm.setAttribute("data-id", auction.id);
+        document.getElementById("title").value = auction.title;
+        document.getElementById("description").value = auction.description;
+        document.getElementById("startingPrice").value = auction.startingPrice;
+        document.getElementById("endDate").value = auction.endDate;
+      }
     }
   });
+
+  // Event listener for updating an auction
+  document
+    .getElementById("updateAuctionForm")
+    .addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const auctionId = event.target.getAttribute("data-id");
+      const title = document.getElementById("title").value;
+      const description = document.getElementById("description").value;
+      const startingPrice = document.getElementById("startingPrice").value;
+      const endDateUpdate = document.getElementById("endDateUpdate").value;
+
+      const response = await fetch(`/auctions/${auctionId}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          title,
+          description,
+          startingPrice,
+          endDate: endDateUpdate,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const updatedAuction = await response.json();
+        console.log("Auction updated successfully:", updatedAuction);
+        document.location.replace(`/auctions/${auctionId}`);
+      } else {
+        const errorData = await response.json();
+        console.log("Failed to update auction:", errorData.error);
+        alert("Failed to update auction");
+      }
+    });
+});
