@@ -4,10 +4,10 @@ const auctionController = require("../controllers/auctionController");
 const userController = require("../controllers/userController");
 const withAuth = require("../utils/auth");
 
-// Auction routes
+// // Auction routes
 router.get("/", auctionController.getAllAuctions);
 router.get("/auctions/:id", auctionController.getAuction);
-router.get("/newlisting", auctionController.newListing);
+// router.get("/newlisting", auctionController.newListing);
 router.post("/auctions", withAuth, auctionController.createAuction);
 router.put("/auctions/:id", withAuth, auctionController.updateAuction);
 router.get("/profile", withAuth, auctionController.getProfile);

@@ -1,5 +1,5 @@
-require('dotenv').config();
-const { Sequelize, DataTypes } = require('sequelize');
+require("dotenv").config();
+const { Sequelize, DataTypes } = require("sequelize");
 
 // Get MySQL credentials from environment variables
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
@@ -8,11 +8,11 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   port: DB_PORT,
-  dialect: 'mysql',
+  dialect: "mysql",
 });
 
 // Define the User model
-const User = sequelize.define('User', {
+const User = sequelize.define("User", {
   // Define the user model attributes
   id: {
     type: DataTypes.INTEGER,
@@ -34,7 +34,7 @@ const User = sequelize.define('User', {
 });
 
 // Define the Auction model
-const Auction = sequelize.define('Auction', {
+const Auction = sequelize.define("Auction", {
   // Define the auction model attributes
   id: {
     type: DataTypes.INTEGER,
@@ -71,8 +71,8 @@ Auction.belongsTo(User);
 sequelize
   .sync()
   .then(() => {
-    console.log('Database tables created successfully');
+    console.log("Database tables created successfully");
   })
   .catch((error) => {
-    console.error('Error creating database tables:', error);
+    console.error("Error creating database tables:", error);
   });
