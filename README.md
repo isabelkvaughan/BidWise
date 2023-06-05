@@ -1,6 +1,6 @@
 # BidWise: Interactive Full-Stack Application
 
-![Screenshot](screenshot.png)
+![Screenshot](./public/images/home_screenshot.png)
 
 ## Description
 
@@ -46,10 +46,14 @@ XXX
 
 ## Mock Up
 
-![Screenshot of application Home page](screenshot.png)
-![Screenshot of Login / Sign Up page](screenshot.png)
-![Screenshot of single auction page](screenshot.png)
-![Screenshot of user profile](screenshot.png)
+- BidWise Home Page
+  ![Screenshot of application Home page](./public/images/home_screenshot.png)
+- Login / Sign Up
+  ![Screenshot of Login / Sign Up page](./public/images/login_screenshot.png)
+- Auction Item
+  ![Screenshot of single auction page](./public/images/auction_screenshot.png)
+- User Profile
+  ![Screenshot of user profile](./public/images/profile_screenshot.png)
 
 ## Contributors
 
