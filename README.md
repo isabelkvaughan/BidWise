@@ -4,7 +4,7 @@
 
 ## Description
 
-BidWise is a comprehensive mobile application designed to provide users with a platform to engage in online auctions, view and bid on a wide range of items, as well as create their own auctions to sell their preloved goods. The app offers a convenient and user-friendly interface that facilitates the buying and selling process.
+BidWise is a comprehensive desktop and mobile application designed to provide users with a platform to engage in online auctions, view and bid on a wide range of items, as well as create their own auctions to sell their preloved goods. The app offers a convenient and user-friendly interface that facilitates the buying and selling process.
 
 Here are some key features and benefits of using BidWise:
 
