@@ -44,9 +44,12 @@ XXX
 
 [Link to the GitHub repository](https://github.com/isabelkvaughan/BidWise)
 
-## Future Development
+## Mock Up
 
-XXX
+![Screenshot of application Home page](screenshot.png)
+![Screenshot of Login / Sign Up page](screenshot.png)
+![Screenshot of single auction page](screenshot.png)
+![Screenshot of user profile](screenshot.png)
 
 ## Contributors
 
