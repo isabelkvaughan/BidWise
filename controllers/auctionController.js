@@ -80,7 +80,7 @@ const getProfile = async (req, res) => {
 // Create New Listing
 const createAuction = async (req, res) => {
   try {
-    const { title, description, startingPrice, endDate } = req.body;
+    const { title, description, startingPrice, endDate, imageUrl } = req.body;
     const userId = req.session.user_id; // Get the user ID from the session
     const auction = await Auction.create({
       title,
@@ -88,6 +88,7 @@ const createAuction = async (req, res) => {
       startingPrice,
       endDate,
       userId,
+      imageUrl,
     });
     res.status(201).json(auction);
   } catch (error) {

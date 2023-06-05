@@ -32,6 +32,10 @@ const Auction = sequelize.define('auction', {
     type: DataTypes.DATE,
     allowNull: false,
   },
+  imageUrl: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
   userId: {
     type: DataTypes.INTEGER,
     allowNull: true,
@@ -42,6 +46,7 @@ const Auction = sequelize.define('auction', {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   },
+  
 });
 
 module.exports = Auction;

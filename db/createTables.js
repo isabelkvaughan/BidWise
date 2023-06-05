@@ -57,6 +57,10 @@ const Auction = sequelize.define('Auction', {
     type: DataTypes.DATE,
     allowNull: false,
   },
+  imageUrl: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
 });
 
 // Define the relationship between User and Auction
