@@ -27,10 +27,6 @@ body {
   color: var(--dark);
 }
 
-a {
-  color: var(--primary);
-}
-
 .flex-column {
   flex: 1;
   display: flex;
@@ -158,6 +154,18 @@ textarea {
   border: 1px solid var(--quatrinary);
   border-radius: var(--border-radius);
   resize: vertical;
+}
+
+/* PROFILE */
+.auction-item {
+  color: var(--primary);
+  text-decoration: underline;
+  text-transform: capitalize;
+  transition: color 0.3s;
+}
+
+.auction-item:hover {
+  color: var(--quatrinary);
 }
 
 /* SINGLE AUCTION */

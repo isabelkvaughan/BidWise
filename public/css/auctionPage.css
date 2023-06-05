@@ -15,7 +15,6 @@
 }
 
 .auction-name {
-  font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -27,10 +26,6 @@
 .starting-price {
   font-weight: bold;
   margin-bottom: 10px;
-}
-
-a {
-  color: Blue;
 }
 
 .max-size-img {
