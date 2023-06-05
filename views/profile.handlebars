@@ -42,25 +42,61 @@
 
       {{#each userAuctions as |auction|}}
         <div class="row mb-2">
-          <div class="col-md-8">
+          <div class="col-md-6">
             <h5><a
                 class="auction-item"
                 href="/auctions/{{auction.id}}"
               >{{auction.title}}</a></h5>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
+            
             <button
               class="btn btn-sm btn-danger delete-button"
               data-id="{{auction.id}}"
             >DELETE</button>
           </div>
+          <div class="col-md-3">
+              <button
+                class="btn btn-sm btn-primary show-update-form-btn"
+                data-id="{{auction.id}}"
+              >UPDATE</button>
+            </div>
+
         </div>
       {{/each}}
-    </div>
+    
+    <!-- Update form (initially hidden) -->
+    <form id="updateAuctionForm" style="display: none;">
+      {{#each userAuctions as |auction|}}
+      <input
+        type="text"
+        id="title"
+        placeholder="Title"
+        value="{{auction.title}}"
+      />
+      <input
+        type="text"
+        id="description"
+        placeholder="Description"
+        value="{{auction.description}}"
+      />
+      <input
+        type="number"
+        id="startingPrice"
+        placeholder="Starting Price"
+        value="{{auction.startingPrice}}"
+      />
+      <input type="date" id="endDate" value="{{auction.endDate}}" />
+      <button
+        class="btn btn-sm btn-success update-button"
+        data-id="{{auction.id}}"
+        type="submit"
+      >Save</button>
+    </form>
   {{else}}
     <p>You haven't created any auctions yet.</p>
   {{/if}}
-
+</div>
 </div>
 
 <script src="/js/profile.js"></script>
