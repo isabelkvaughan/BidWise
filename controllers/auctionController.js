@@ -80,7 +80,7 @@ const getProfile = async (req, res) => {
 // Create New Listing
 const createAuction = async (req, res) => {
   try {
-    const { title, description, startingPrice, endDate } = req.body;
+    const { title, description, startingPrice, endDate, imageUrl } = req.body;
     const userId = req.session.user_id; // Get the user ID from the session
     const auction = await Auction.create({
       title,
@@ -88,6 +88,7 @@ const createAuction = async (req, res) => {
       startingPrice,
       endDate,
       userId,
+      imageUrl,
     });
     res.status(201).json(auction);
   } catch (error) {
@@ -98,10 +99,10 @@ const createAuction = async (req, res) => {
 const updateAuction = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, startingPrice, endDate } = req.body;
+    const { title, description, startingPrice, endDate, imageUrl } = req.body;
 
     await Auction.update(
-      { title, description, startingPrice, endDate },
+      { title, description, startingPrice, endDate, imageUrl },
       { where: { id, user_id: req.session.user_id } }
     );
     res.status(200).json({ message: "Auction updated successfully" });
