@@ -1,6 +1,6 @@
-const faker = require('faker');
-const { User, Auction } = require('../models');
-const { google } = require('googleapis');
+const faker = require("faker");
+const { User, Auction } = require("../models");
+const { google } = require("googleapis");
 
 const serviceAccount = {
   type: process.env.TYPE,
@@ -13,20 +13,18 @@ const serviceAccount = {
   token_uri: process.env.TOKEN_URI,
   auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
   client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
-  universe_domain: process.env.UNIVERSE_DOMAIN
+  universe_domain: process.env.UNIVERSE_DOMAIN,
 };
-
-
 
 // Create a new Google Image API client
 const googleImage = google.customsearch({
-  version: 'v1',
+  version: "v1",
   auth: new google.auth.JWT(
     serviceAccount.client_email,
     null,
     serviceAccount.private_key,
-    ['https://www.googleapis.com/auth/cse']
-  )
+    ["https://www.googleapis.com/auth/cse"]
+  ),
 });
 
 // Function to generate a random number within a range
@@ -38,23 +36,22 @@ function getRandomNumber(min, max) {
 async function searchImage(title) {
   try {
     // Extract the last two words from the title
-    const titleWords = title.split(' ');
-    const lastTwoWords = titleWords.slice(-2).join(' ');
+    const titleWords = title.split(" ");
+    const lastTwoWords = titleWords.slice(-2).join(" ");
 
     const res = await googleImage.cse.list({
-      cx: '056e774d9562544f1',
+      cx: "63e6478adcb604240",
       q: lastTwoWords,
-      searchType: 'image',
-      num: 1
+      searchType: "image",
+      num: 1,
     });
     const imageUrl = res.data.items[0].link;
     return imageUrl;
   } catch (error) {
-    console.error('Error searching image:', error);
+    console.error("Error searching image:", error);
     return null;
   }
 }
-
 
 // Function to create fake users
 async function createFakeUsers() {
@@ -69,9 +66,9 @@ async function createFakeUsers() {
         updatedAt: new Date(),
       });
     }
-    console.log('Fake users created successfully.');
+    console.log("Fake users created successfully.");
   } catch (error) {
-    console.error('Error creating fake users:', error);
+    console.error("Error creating fake users:", error);
   }
 }
 
@@ -81,7 +78,7 @@ async function createFakeAuctions() {
     const users = await User.findAll(); // Get all users
 
     // Create 10 fake auctions
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 10; i++) {
       const randomUserIndex = getRandomNumber(0, users.length - 1);
       const randomUser = users[randomUserIndex];
 
@@ -99,9 +96,9 @@ async function createFakeAuctions() {
         userId: randomUser.id,
       });
     }
-    console.log('Fake auctions created successfully.');
+    console.log("Fake auctions created successfully.");
   } catch (error) {
-    console.error('Error creating fake auctions:', error);
+    console.error("Error creating fake auctions:", error);
   }
 }
 
