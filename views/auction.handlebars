@@ -28,13 +28,16 @@
   <!-- Placeholder for success message -->
   <div id="success-message"></div>
 
-  <!-- Bid form (conditionally rendered based on user login status) -->
+  <!-- Bid form (conditionally rendered based on user login status and isOwner flag) -->
   {{#if logged_in}}
-    <form id="bid-form" data-auction-id="{{individualAuction.id}}">
-      <input type="number" name="amount" placeholder="Enter bid amount" required />
-      <button type="submit" class="primary-btn">Place Bid</button>
-    </form>
+    {{#unless isOwner}}
+      <form id="bid-form" data-auction-id="{{individualAuction.id}}">
+        <input type="number" name="amount" placeholder="Enter bid amount" required />
+        <button type="submit" class="primary-btn">Place Bid</button>
+      </form>
+    {{/unless}}
   {{else}}
     <p>Login to place a bid</p>
   {{/if}}
+
 </section>

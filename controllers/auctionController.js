@@ -1,6 +1,7 @@
 const { Auction, User, Bid } = require("../models");
 const path = require("path");
 const fs = require("fs");
+
 // Controller functions for auction
 const getAllAuctions = async (req, res) => {
   try {
@@ -23,17 +24,16 @@ const getAuction = async (req, res) => {
     const auction = await Auction.findByPk(id, {
       include: [{ model: User, attributes: ["name", "email"] }],
     });
-
     if (!auction) {
       return res.status(404).json({ error: "Auction not found" });
     }
-
     const individualAuction = auction.get({ plain: true });
-
+    const userId = req.session.user_id;
+    const isOwner = individualAuction.userId === userId;
     res.render("auction", {
       individualAuction,
       logged_in: req.session.logged_in,
-      //isOwner,
+      isOwner,
     });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
@@ -82,9 +82,6 @@ const createAuction = async (req, res) => {
     );
 
     fs.renameSync(imageFile.path, uploadPath);
-
-    // console.log("uniqueFilename ", uniqueFilename);
-    // console.log("uploadPath ", uploadPath);
 
     const auction = await Auction.create({
       title,
