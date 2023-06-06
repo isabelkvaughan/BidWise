@@ -6,8 +6,6 @@ Handlebars.registerHelper("formatDate", (date) => {
   return moment(date).format("dddd Do MMMM, YYYY [at] h:mma");
 });
 
-// Checks if a given URL starts with "http://" or "https://" 
-// and returns the corresponding block of code whether it is a link or not
 Handlebars.registerHelper('isLink', function(url, options) {
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return options.fn(this);
@@ -15,6 +13,5 @@ Handlebars.registerHelper('isLink', function(url, options) {
     return options.inverse(this);
   }
 });
-
 
 module.exports = Handlebars;
