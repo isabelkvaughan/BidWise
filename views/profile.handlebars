@@ -8,7 +8,7 @@
   <div class="col-md-6">
     <h3>Add new auction:</h3>
 
-    <form class="form new-auction-form">
+    <form class="form new-auction-form" enctype="multipart/form-data" >
       <div class="form-group">
         <label for="item-name">Name of the Item:</label>
         <input class="form-input" type="text" id="item-name" name="item-name" />
@@ -29,6 +29,12 @@
       <div class="form-group">
         <label for="endDate">End Date:</label>
         <input type="date" id="endDate" name="endDate" required />
+      </div>
+      <div class="form-group">
+        <input type="file" name="image" id="fileInput">
+      </div>
+      <div class="form-group">
+        <input type="file" name="image" id="fileInput">
       </div>
       <div class="form-group">
         <button type="submit" class="primary-btn">Create</button>
@@ -60,36 +66,46 @@
                     >DELETE</button>
                 </div>
             </div>
-            <!-- Update form (initially hidden) -->
-            <form id="updateAuctionForm" style="display: none;">
-                <input
-                    type="text"
-                    id="title"
-                    placeholder="Title"
-                    value="{{auction.title}}"
-                />
-                <input
-                    type="text"
-                    id="description"
-                    placeholder="Description"
-                    value="{{auction.description}}"
-                />
-                <input
-                    type="number"
-                    id="startingPrice"
-                    placeholder="Starting Price"
-                    value="{{auction.startingPrice}}"
-                />
-                <input type="date" id="endDateUpdate" value="{{auction.endDate}}" />
-                <button
-                    class="btn btn-sm btn-success update-button"
-                    data-id="{{auction.id}}"
-                    type="submit"
-                >Save</button>
-            </form>
-        {{/each}}
-    </div>
-{{else}}
+
+        </div>
+       {{/each}}
+    {{#each userAuctions as |auction|}}
+    <!-- Update form (initially hidden) -->
+    <form id="updateAuctionForm" style="display: none;">
+    
+      <input
+        type="text"
+        id="title"
+        placeholder="Title"
+        value="{{auction.title}}"
+      />
+      <input
+        type="text"
+        id="description"
+        placeholder="Description"
+        value="{{auction.description}}"
+      />
+      <input
+        type="number"
+        id="startingPrice"
+        placeholder="Starting Price"
+        value="{{auction.startingPrice}}"
+      />
+      <input type="date" id="endDateUpdate" value="{{auction.endDate}}" />
+      <button
+        class="btn btn-sm btn-success update-button"
+        data-id="{{auction.id}}"
+        type="submit"
+      >Save</button>
+      <button
+        class="btn btn-sm btn-danger" id="cancel-button"
+        data-id="{{auction.id}}"
+        type="button"
+      >Cancel</button>
+     
+    </form>
+    {{/each}}
+  {{else}}
     <p>You haven't created any auctions yet.</p>
 {{/if}}
 

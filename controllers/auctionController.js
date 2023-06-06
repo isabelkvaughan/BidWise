@@ -61,18 +61,36 @@ const getProfile = async (req, res) => {
 // Create New Listing
 const createAuction = async (req, res) => {
   try {
-    const { title, description, startingPrice, endDate, imageUrl } = req.body;
+    const { title, description, startingPrice, endDate } = req.body;
     const userId = req.session.user_id; // Get the user ID from the session
+    // Check if an image file was uploaded
+    if (!req.file) {
+      return res.status(400).json({ error: "No image file uploaded" });
+    }
+    const imageFile = req.file;
+    // Generate a unique filename for the image
+    const uniqueFilename = `${Date.now()}_${imageFile.originalname}`;
+    const uploadPath = path.join(__dirname, "../public/images", uniqueFilename);
+    console.log("imageFile ", imageFile);
+    console.log("uniqueFilename ", uniqueFilename);
+    console.log("uploadPath ", uploadPath);
+
+    // Move the uploaded image file to the specified path
+    await imageFile.mv(uploadPath);
+
+    // Move the image file to a designated upload directory
+    //await imageFile.mv(`uploads/${imageFilename}`);
     const auction = await Auction.create({
       title,
       description,
       startingPrice,
       endDate,
       userId,
-      imageUrl,
+      imageUrl: uniqueFilename,
     });
     res.status(201).json(auction);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
