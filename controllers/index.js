@@ -1,13 +1,44 @@
 const express = require("express");
-const routes = require("./routes");
-const app = express();
-const PORT = process.env.PORT || process.env.DB_PORT;
-
-app.use(express.json());
-app.use("/", routes);
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+const router = express.Router();
+const auctionController = require("./auctionController");
+const userController = require("./userController");
+const withAuth = require("../utils/auth");
+const multer = require("multer");
+const path = require("path");
+const storage = multer.diskStorage({
+  destination: "public/images",
+  filename: function (req, file, cb) {
+    // Generate a unique filename
+    const uniqueFilename = `${Date.now()}_${file.originalname}`;
+    cb(null, uniqueFilename);
+  },
 });
+const uploadImage = multer({ storage: storage });
 
-module.exports = upload;
+// Auction routes
+router.get("/", auctionController.getAllAuctions);
+router.get("/auctions/:id", auctionController.getAuction);
+// router.get("/newlisting", auctionController.newListing);
+router.post(
+  "/auctions",
+  withAuth,
+  uploadImage.single("image"),
+  auctionController.createAuction
+);
+router.put("/auctions/:id", withAuth, auctionController.updateAuction);
+router.get("/profile", withAuth, auctionController.getProfile);
+router.delete("/auctions/:id", withAuth, auctionController.deleteAuction);
+router.post("/auctions/:id/bid", withAuth, auctionController.createBid);
+
+// User routes
+router.get("/users", userController.getAllUsers);
+router.get("/users/:id", userController.getUser);
+router.post("/users", userController.createUser);
+router.put("/users/:id", userController.updateUser);
+router.delete("/users/:id", userController.deleteUser);
+router.get("/login", userController.getLoginUser);
+
+router.post("/login", userController.loginUser);
+router.post("/logout", userController.logoutUser);
+
+module.exports = router;
