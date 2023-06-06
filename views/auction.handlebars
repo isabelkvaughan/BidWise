@@ -2,16 +2,13 @@
 
 <section class="container">
   <h3 class="auction-name">{{individualAuction.title}}</h3>
-  <img
-    src="/images/{{individualAuction.imageUrl}}"
-    alt="{{individualAuction.title}} Image"
-    class="max-size-img"
-  />
+  {{#isLink individualAuction.imageUrl}}
+    <img src="{{individualAuction.imageUrl}}" alt="{{individualAuction.title}} Image" class="max-size-img" />
+  {{else}}
+    <img src="/images/{{individualAuction.imageUrl}}" alt="{{individualAuction.title}} Image" class="max-size-img" />
+  {{/isLink}}
   <h5>Current Bid: </h5>
-  <p
-    id="starting-price"
-    class="starting-price"
-  >${{individualAuction.startingPrice}}</p>
+  <p id="starting-price" class="starting-price">${{individualAuction.startingPrice}}</p>
   <br />
   <h5>Item Description: </h5>
   <p class="description">{{individualAuction.description}}</p>
@@ -20,7 +17,7 @@
   <p class="creation-date">{{formatDate individualAuction.createdAt}}</p>
   <br />
   <h5>Auction End Date: </h5>
-  <p class="end-date"> {{formatDate individualAuction.endDate}}</p>
+  <p class="end-date">{{formatDate individualAuction.endDate}}</p>
   <br />
   <h5>Last Updated: </h5>
   <p class="updated-date">{{formatDate individualAuction.updatedAt}}</p>
@@ -34,12 +31,7 @@
   <!-- Bid form (conditionally rendered based on user login status) -->
   {{#if logged_in}}
     <form id="bid-form" data-auction-id="{{individualAuction.id}}">
-      <input
-        type="number"
-        name="amount"
-        placeholder="Enter bid amount"
-        required
-      />
+      <input type="number" name="amount" placeholder="Enter bid amount" required />
       <button type="submit" class="primary-btn">Place Bid</button>
     </form>
   {{else}}
