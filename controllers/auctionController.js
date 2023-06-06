@@ -1,5 +1,6 @@
 const { Auction, User, Bid } = require("../models");
-
+const path = require("path");
+const fs = require("fs");
 // Controller functions for auction
 const getAllAuctions = async (req, res) => {
   try {
@@ -63,23 +64,28 @@ const createAuction = async (req, res) => {
   try {
     const { title, description, startingPrice, endDate } = req.body;
     const userId = req.session.user_id; // Get the user ID from the session
-    // Check if an image file was uploaded
-    if (!req.file) {
-      return res.status(400).json({ error: "No image file uploaded" });
-    }
+
     const imageFile = req.file;
+    //console.log("imageFile ", imageFile);
+    if (!imageFile) {
+      // Handle the case when no image file is uploaded
+      return res.status(400).json({ error: "No image file provided" });
+    }
     // Generate a unique filename for the image
     const uniqueFilename = `${Date.now()}_${imageFile.originalname}`;
-    const uploadPath = path.join(__dirname, "../public/images", uniqueFilename);
-    console.log("imageFile ", imageFile);
-    console.log("uniqueFilename ", uniqueFilename);
-    console.log("uploadPath ", uploadPath);
+    const uploadPath = path.join(
+      __dirname,
+      "..",
+      "public",
+      "images",
+      uniqueFilename
+    );
 
-    // Move the uploaded image file to the specified path
-    await imageFile.mv(uploadPath);
+    fs.renameSync(imageFile.path, uploadPath);
 
-    // Move the image file to a designated upload directory
-    //await imageFile.mv(`uploads/${imageFilename}`);
+    // console.log("uniqueFilename ", uniqueFilename);
+    // console.log("uploadPath ", uploadPath);
+
     const auction = await Auction.create({
       title,
       description,
@@ -169,7 +175,9 @@ const createBid = async (req, res) => {
 
     // Validate bid amount
     if (highestBid && amount <= highestBid.amount) {
-      return res.status(400).json({ error: "Bid must be higher than the current highest bid" });
+      return res
+        .status(400)
+        .json({ error: "Bid must be higher than the current highest bid" });
     }
 
     // Create the bid

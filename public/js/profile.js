@@ -1,3 +1,15 @@
+// const fileInput = document.getElementById("fileInput");
+// fileInput.addEventListener("change", async (event) => {
+//   console.log("change event listener triggered");
+//   const files = event.target.files;
+//   console.log(files);
+
+//   // Access the directory path
+//   const directoryPath = files[0].webkitRelativePath;
+
+//   console.log(directoryPath);
+// });
+
 const newFormHandler = async (event) => {
   event.preventDefault();
 
@@ -5,30 +17,23 @@ const newFormHandler = async (event) => {
   const startingPrice = document.querySelector("#item-price").value.trim();
   const description = document.querySelector("#item-desc").value.trim();
   const endDate = document.getElementById("endDate").value;
-  const fileInput = document.getElementById("fileInput");
+  const fileInput = event.target.elements.image;
+  //console.log(fileInput);
+  // Get the selected file
+  const file = fileInput.files[0];
 
-  fileInput.addEventListener("change", async (event) => {
-    const files = event.target.files;
-    console.log(files);
+  if (title && startingPrice && description && endDate) {
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("startingPrice", startingPrice);
+    formData.append("endDate", endDate);
 
-    // Access the directory path
-    const directoryPath = files[0].webkitRelativePath;
-
-    console.log(directoryPath);
-
-    if (title && startingPrice && description && endDate) {
-      const response = await fetch(`/auctions`, {
+    try {
+      const response = await fetch("/auctions", {
         method: "POST",
-        body: JSON.stringify({
-          title,
-          description,
-          startingPrice,
-          endDate,
-          imageUrl: imageInput,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        body: formData,
       });
 
       if (response.ok) {
@@ -36,8 +41,11 @@ const newFormHandler = async (event) => {
       } else {
         alert("Failed to create auction");
       }
+    } catch (error) {
+      console.log(error);
+      alert("An error occurred while creating the auction");
     }
-  });
+  }
 };
 
 document

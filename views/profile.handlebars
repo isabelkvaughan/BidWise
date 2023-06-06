@@ -8,7 +8,7 @@
   <div class="col-md-6">
     <h3>Add new auction:</h3>
 
-    <form class="form new-auction-form" enctype="multipart/form-data" >
+    <form class="form new-auction-form" enctype="multipart/form-data">
       <div class="form-group">
         <label for="item-name">Name of the Item:</label>
         <input class="form-input" type="text" id="item-name" name="item-name" />
@@ -31,10 +31,7 @@
         <input type="date" id="endDate" name="endDate" required />
       </div>
       <div class="form-group">
-        <input type="file" name="image" id="fileInput">
-      </div>
-      <div class="form-group">
-        <input type="file" name="image" id="fileInput">
+        <input type="file" name="image" id="fileInput" />
       </div>
       <div class="form-group">
         <button type="submit" class="primary-btn">Create</button>
@@ -44,32 +41,66 @@
 
   {{#if userAuctions.length}}
     <div class="col-md-6 user-auction-list">
-        <h3 style="margin-bottom: 25px;">Current Auctions:</h3>
+      <h3 style="margin-bottom: 25px;">Current Auctions:</h3>
 
-        {{#each userAuctions as |auction|}}
-            <div class="row mb-2">
-                <div class="col-md-6">
-                    <h5><a
-                            class="auction-item"
-                            href="/auctions/{{auction.id}}"
-                        >{{auction.title}}</a></h5>
-                </div>
-                <div class="col-md-6 d-flex justify-content-between">
-                    <button
-                        class="btn btn-sm btn-primary show-update-form-btn"
-                        data-id="{{auction.id}}"
-                    >UPDATE</button>
-                    <button
-                        class="btn btn-sm btn-danger delete-button"
-                        data-id="{{auction.id}}"
-                        style="margin-left: 5px;"
-                    >DELETE</button>
-                </div>
-            </div>
+      {{#each userAuctions as |auction|}}
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <h5><a
+                class="auction-item"
+                href="/auctions/{{auction.id}}"
+              >{{auction.title}}</a></h5>
+          </div>
+          <div class="col-md-6 d-flex justify-content-between">
+            <button
+              class="btn btn-sm btn-primary show-update-form-btn"
+              data-id="{{auction.id}}"
+            >UPDATE</button>
+            <button
+              class="btn btn-sm btn-danger delete-button"
+              data-id="{{auction.id}}"
+              style="margin-left: 5px;"
+            >DELETE</button>
+          </div>
+          <form id="updateAuctionForm" style="display: none;">
 
+            <input
+              type="text"
+              id="title"
+              placeholder="Title"
+              value="{{auction.title}}"
+            />
+            <input
+              type="text"
+              id="description"
+              placeholder="Description"
+              value="{{auction.description}}"
+            />
+            <input
+              type="number"
+              id="startingPrice"
+              placeholder="Starting Price"
+              value="{{auction.startingPrice}}"
+            />
+            <input type="date" id="endDateUpdate" value="{{auction.endDate}}" />
+            <button
+              class="btn btn-sm btn-success update-button"
+              data-id="{{auction.id}}"
+              type="submit"
+            >Save</button>
+            <button
+              class="btn btn-sm btn-danger"
+              id="cancel-button"
+              data-id="{{auction.id}}"
+              type="button"
+            >Cancel</button>
+
+          </form>
         </div>
-       {{/each}}
-    {{#each userAuctions as |auction|}}
+
+      {{/each}}
+    </div>
+    {{!-- {{#each userAuctions as |auction|}}
     <!-- Update form (initially hidden) -->
     <form id="updateAuctionForm" style="display: none;">
     
@@ -104,14 +135,15 @@
       >Cancel</button>
      
     </form>
-    {{/each}}
+    {{/each}} --}}
   {{else}}
     <p>You haven't created any auctions yet.</p>
-{{/if}}
+  {{/if}}
 
 </div>
-</div>
+
 <script>
-  var userAuctions = {{{json userAuctions}}}; // Assign userAuctions value to a JavaScript variable to use in profile.js
+  var userAuctions =
+  {{{json userAuctions}}}; // Assign userAuctions value to a JavaScript variable
 </script>
 <script src="/js/profile.js"></script>
