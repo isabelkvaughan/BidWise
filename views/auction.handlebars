@@ -1,12 +1,36 @@
+<link rel="stylesheet" href="/css/auctionPage.css" />
+
 <section class="container">
   <h3 class="auction-name">{{individualAuction.title}}</h3>
+  <img src="{{individualAuction.imageUrl}}" alt="{{individualAuction.title}} Image" class="max-size-img"/>
+   <h5>Current Bid: </h5>
+  <p id="starting-price" class="starting-price">${{individualAuction.startingPrice}}</p>
+  <br>
+  <h5>Item Description: </h5>
   <p class="description">{{individualAuction.description}}</p>
-  <p class="starting-price">${{individualAuction.startingPrice}}</p>
-  <img src="{{individualAuction.imageUrl}}" alt="Item Image" class="max-size-img"/>
-  <p class="end-date">{{individualAuction.endDate}}</p>
-  <p class="creation-date">{{individualAuction.createdAt}}</p>
-  <p class="updated-date">{{individualAuction.updatedAt}}</p>
-  {{!-- {{#if isOwner}}
-    <a href="/" class="update-link">Update</a>
-  {{/if}} --}}
+  <br>
+  <h5>Auction List Date: </h5>
+  <p class="creation-date">{{formatDate individualAuction.createdAt}}</p>
+  <br>
+  <h5>Auction End Date: </h5> 
+  <p class="end-date"> {{formatDate individualAuction.endDate}}</p>
+  <br>
+  <h5>Last Updated: </h5>
+  <p class="updated-date">{{formatDate individualAuction.updatedAt}}</p>
+  <br>
+  <!-- Placeholder for error message -->
+  <div id="error-message"></div>
+
+  <!-- Placeholder for success message -->
+  <div id="success-message"></div>
+
+  <!-- Bid form (conditionally rendered based on user login status) -->
+  {{#if logged_in}}
+  <form id="bid-form" data-auction-id="{{individualAuction.id}}">
+    <input type="number" name="amount" placeholder="Enter bid amount" required>
+    <button type="submit" class="primary-btn">Place Bid</button>
+  </form>
+  {{else}}
+  <p>Login to place a bid</p>
+  {{/if}}
 </section>

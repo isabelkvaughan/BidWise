@@ -34,35 +34,37 @@
         <input type="file" name="image" id="fileInput">
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">Create</button>
+        <input type="file" name="image" id="fileInput">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="primary-btn">Create</button>
       </div>
     </form>
   </div>
 
   {{#if userAuctions.length}}
     <div class="col-md-6 user-auction-list">
-      <h3>Current Auctions:</h3>
+        <h3 style="margin-bottom: 25px;">Current Auctions:</h3>
 
-      {{#each userAuctions as |auction|}}
-        <div class="row mb-2">
-          <div class="col-md-6">
-            <h5><a
-                class="auction-item"
-                href="/auctions/{{auction.id}}"
-              >{{auction.title}}</a></h5>
-          </div>
-          <div class="col-md-3">
-            
-            <button
-              class="btn btn-sm btn-danger delete-button"
-              data-id="{{auction.id}}"
-            >DELETE</button>
-          </div>
-          <div class="col-md-3">
-              <button
-                class="btn btn-sm btn-primary show-update-form-btn"
-                data-id="{{auction.id}}"
-              >UPDATE</button>
+        {{#each userAuctions as |auction|}}
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <h5><a
+                            class="auction-item"
+                            href="/auctions/{{auction.id}}"
+                        >{{auction.title}}</a></h5>
+                </div>
+                <div class="col-md-6 d-flex justify-content-between">
+                    <button
+                        class="btn btn-sm btn-primary show-update-form-btn"
+                        data-id="{{auction.id}}"
+                    >UPDATE</button>
+                    <button
+                        class="btn btn-sm btn-danger delete-button"
+                        data-id="{{auction.id}}"
+                        style="margin-left: 5px;"
+                    >DELETE</button>
+                </div>
             </div>
 
         </div>
@@ -105,7 +107,8 @@
     {{/each}}
   {{else}}
     <p>You haven't created any auctions yet.</p>
-  {{/if}}
+{{/if}}
+
 </div>
 </div>
 <script>
