@@ -99,47 +99,9 @@
             data-id="{{auction.id}}"
             type="button"
           >Cancel</button>
-
         </form>
-
       {{/each}}
     </div>
-    {{!-- {{#each userAuctions as |auction|}}
-    <!-- Update form (initially hidden) -->
-    <form id="updateAuctionForm" style="display: none;">
-    
-      <input
-        type="text"
-        id="title"
-        placeholder="Title"
-        value="{{auction.title}}"
-      />
-      <input
-        type="text"
-        id="description"
-        placeholder="Description"
-        value="{{auction.description}}"
-      />
-      <input
-        type="number"
-        id="startingPrice"
-        placeholder="Starting Price"
-        value="{{auction.startingPrice}}"
-      />
-      <input type="date" id="endDateUpdate" value="{{auction.endDate}}" />
-      <button
-        class="btn btn-sm btn-success update-button"
-        data-id="{{auction.id}}"
-        type="submit"
-      >Save</button>
-      <button
-        class="btn btn-sm btn-danger" id="cancel-button"
-        data-id="{{auction.id}}"
-        type="button"
-      >Cancel</button>
-     
-    </form>
-    {{/each}} --}}
   {{else}}
     <p>You haven't created any auctions yet.</p>
   {{/if}}
