@@ -34,6 +34,21 @@ Here are some key features and benefits of using BidWise:
 4. Set up the database by running `npm run createdb`, `npm run createtables` and `npm run seed`
 5. Start the application using `npm start`.
 
+To set up the Google Search API and environment variables, refer to these steps:
+1. Create a Google Cloud Platform (GCP) project: If you don't already have a GCP project, create one by visiting the Google Cloud Console (console.cloud.google.com) and following the instructions.
+2. Enable the Google Search API: Once you have a GCP project, navigate to the Google Cloud Console and search for the Google Search API. Enable it for your project.
+3. In the Cloud Console, navigate to the "IAM & Admin" section or search for "IAM & Admin" in the search bar.
+4. Click on "Service accounts" to access the service accounts dashboard.
+5. Click on the "Create Service Account" button to create a new service account.
+6. Provide a name and ID for the service account, and optionally add a description.
+7. Choose the appropriate project role(s) for the service account. The roles determine the permissions and access levels the service account will have.
+8. Optionally, grant any necessary additional permissions by clicking on "Add another role."
+9. Enable the "Furnish a new private key" option and select the key type as "JSON."
+10. Click on the "Create" button to create the service account and generate a JSON credentials file.
+11. The JSON file will be automatically downloaded to your computer. Store this file securely, as it contains sensitive information that grants access to your Google Cloud resources.
+12. Refer to the .env.example file and copy over the respective attribute values from the downloaded JSON credentials file into your own .env file
+13. Set up database credentials in the .env file
+
 ## Usage
 
 XXX
