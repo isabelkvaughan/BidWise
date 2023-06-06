@@ -7,9 +7,11 @@ const exphbs = require("express-handlebars");
 const routes = require("./controllers/routes");
 const helpers = require("./utils/helpers");
 const sequelize = require("./config/connection");
+//const multer = require("multer");
 const app = express();
 const PORT = process.env.PORT || 3000; //default to port 3000 if not live (testing)
 const hbs = exphbs.create({});
+//const upload = multer({ dest: "public/images" });
 Handlebars.registerHelper("json", function (context) {
   return JSON.stringify(context);
 });
@@ -59,6 +61,7 @@ app.set("view engine", "handlebars");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+// app.use(upload.single("image"));
 
 // Routes
 app.use("/", routes);
