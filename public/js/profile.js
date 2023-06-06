@@ -5,22 +5,39 @@ const newFormHandler = async (event) => {
   const startingPrice = document.querySelector("#item-price").value.trim();
   const description = document.querySelector("#item-desc").value.trim();
   const endDate = document.getElementById("endDate").value;
+  const fileInput = document.getElementById("fileInput");
 
-  if (title && startingPrice && description && endDate) {
-    const response = await fetch(`/auctions`, {
-      method: "POST",
-      body: JSON.stringify({ title, description, startingPrice, endDate }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  fileInput.addEventListener("change", async (event) => {
+    const files = event.target.files;
+    console.log(files);
 
-    if (response.ok) {
-      document.location.replace("/profile");
-    } else {
-      alert("Failed to create auction");
+    // Access the directory path
+    const directoryPath = files[0].webkitRelativePath;
+
+    console.log(directoryPath);
+
+    if (title && startingPrice && description && endDate) {
+      const response = await fetch(`/auctions`, {
+        method: "POST",
+        body: JSON.stringify({
+          title,
+          description,
+          startingPrice,
+          endDate,
+          imageUrl: imageInput,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        document.location.replace("/profile");
+      } else {
+        alert("Failed to create auction");
+      }
     }
-  }
+  });
 };
 
 document
@@ -107,5 +124,11 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Failed to update auction:", errorData.error);
         alert("Failed to update auction");
       }
+    });
+  document
+    .getElementById("cancel-button")
+    .addEventListener("click", (event) => {
+      //console.log("cancel clicked");
+      document.getElementById("updateAuctionForm").style.display = "none";
     });
 });
