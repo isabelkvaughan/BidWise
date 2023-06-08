@@ -49,10 +49,6 @@ To set up the Google Search API and environment variables, refer to these steps:
 12. Refer to the .env.example file and copy over the respective attribute values from the downloaded JSON credentials file into your own .env file
 13. Set up database credentials in the .env file
 
-## Usage
-
-XXX
-
 ## Demo
 
 [Link to the deployed application](https://your-app-url.com)
