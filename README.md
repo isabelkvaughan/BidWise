@@ -35,6 +35,7 @@ Here are some key features and benefits of using BidWise:
 5. Start the application using `npm start`.
 
 To set up the Google Search API and environment variables, refer to these steps:
+
 1. Create a Google Cloud Platform (GCP) project: If you don't already have a GCP project, create one by visiting the Google Cloud Console (console.cloud.google.com) and following the instructions.
 2. Enable the Google Search API: Once you have a GCP project, navigate to the Google Cloud Console and search for the Google Search API. Enable it for your project.
 3. In the Cloud Console, navigate to the "IAM & Admin" section or search for "IAM & Admin" in the search bar.
@@ -49,13 +50,7 @@ To set up the Google Search API and environment variables, refer to these steps:
 12. Refer to the .env.example file and copy over the respective attribute values from the downloaded JSON credentials file into your own .env file
 13. Set up database credentials in the .env file
 
-## Usage
-
-XXX
-
 ## Demo
-
-[Link to the deployed application](https://your-app-url.com)
 
 [Link to the GitHub repository](https://github.com/isabelkvaughan/BidWise)
 
