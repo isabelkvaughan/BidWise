@@ -7,7 +7,7 @@ Handlebars.registerHelper("formatDate", (date) => {
 });
 
 Handlebars.registerHelper('isLink', function(url, options) {
-  if (url.startsWith("http://") || url.startsWith("https://")) {
+  if (url && (url.startsWith("http://") || url.startsWith("https://"))) {
     return options.fn(this);
   } else {
     return options.inverse(this);
