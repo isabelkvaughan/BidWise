@@ -5,13 +5,17 @@ const { Sequelize } = require('sequelize');
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
 
 // Create a Sequelize instance without specifying the database name
-const sequelize = new Sequelize({
+if (process.env.JAWSDB_URL) {
+  sequelize = new Sequelize(process.env.JAWSDB_URL);
+} else {
+  sequelize = new Sequelize({
   username: DB_USER,
   password: DB_PASSWORD,
   host: DB_HOST,
   port: DB_PORT,
   dialect: 'mysql',
 });
+}
 
 // Function to drop the database if it exists
 async function dropDatabase() {
